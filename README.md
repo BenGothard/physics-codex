@@ -13,13 +13,38 @@ A lightweight static web app scaffold for learning physics with a clear top-leve
 ```text
 .
 ├── assets/
+├── content/
+│   ├── SOURCES.md
+│   ├── lectures/
+│   │   └── v1/
+│   ├── raw/
+│   └── schema/
 ├── docs/
 ├── index.html
 ├── scripts/
-│   └── main.js
+│   ├── ingest_lectures.py
+│   ├── main.js
+│   └── validate_content.py
 └── styles/
     └── main.css
 ```
+
+## Content ingestion workflow
+
+1. Add or update raw lecture text files in `content/raw/*.txt`.
+2. Run ingestion to normalize content into versioned JSON lecture files:
+
+```bash
+python3 scripts/ingest_lectures.py --version v1
+```
+
+3. Validate all chapter files before publishing:
+
+```bash
+python3 scripts/validate_content.py --lectures-dir content/lectures
+```
+
+4. Keep attribution and legal-use notes up to date in `content/SOURCES.md`.
 
 ## Local preview
 
