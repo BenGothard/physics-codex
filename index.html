@@ -14,54 +14,80 @@
       <div class="brand">Physics Codex</div>
       <nav aria-label="Primary" class="primary-nav">
         <ul>
-          <li><a href="#learn">Learn</a></li>
-          <li><a href="#play">Play</a></li>
-          <li><a href="#challenges">Challenges</a></li>
-          <li><a href="#progress">Progress</a></li>
-          <li><a href="#profile">Profile</a></li>
+          <li><a href="#dashboard">Dashboard</a></li>
+          <li><a href="#topic-chapter">Topic</a></li>
+          <li><a href="#interactive-lesson">Lesson</a></li>
+          <li><a href="#challenge">Challenge</a></li>
+          <li><a href="#reward-progress">Progress</a></li>
         </ul>
       </nav>
     </header>
 
-    <main id="main">
-      <section class="hero">
-        <h1>Master physics by exploring, experimenting, and solving.</h1>
-        <p>
-          Start with concise lessons, jump into playful simulations, and build momentum with goal-based challenges.
-        </p>
+    <main id="main" aria-label="Physics learning flow">
+      <section id="dashboard" class="flow-stage card-section" aria-labelledby="dashboard-title">
+        <div class="section-head">
+          <h1 id="dashboard-title">Home Dashboard</h1>
+          <a class="button-link" href="#interactive-lesson" aria-label="Continue where you left off at lesson 3">Continue where you left off</a>
+        </div>
+        <p class="subtitle">Pick up your personalized learning path and jump back into your active lesson in one step.</p>
+
+        <div class="progress-overview" aria-label="Overall progress snapshot">
+          <article class="widget" data-component="progress-bar" data-value="68" data-label="Course mastery"></article>
+          <article class="widget" data-component="streak-indicator" data-days="6" data-best="14"></article>
+        </div>
+
+        <section aria-labelledby="onboarding-title" class="widget">
+          <h2 id="onboarding-title">Quick Start Hints</h2>
+          <ul class="hint-list">
+            <li><button type="button" class="hint-chip" data-tooltip="Use Tab/Shift+Tab to move between cards and Enter/Space to open one.">Keyboard Navigation</button></li>
+            <li><button type="button" class="hint-chip" data-tooltip="Use the Topic stage to filter by chapter and difficulty.">Choose a Chapter</button></li>
+            <li><button type="button" class="hint-chip" data-tooltip="Earn streak bonuses by finishing at least one challenge each day.">Build Your Streak</button></li>
+          </ul>
+          <p id="tooltip-live" class="tooltip-live" aria-live="polite">Focus a hint to hear tips.</p>
+        </section>
       </section>
 
-      <section id="learn" class="card-section">
-        <h2>Learn</h2>
-        <p>Browse topic paths like Motion, Energy, Waves, Electricity, and Modern Physics.</p>
-        <p>
-          Source attribution and legal-use notes are maintained in
-          <a href="content/SOURCES.md">content/SOURCES.md</a>.
-        </p>
-        <h3>Published lecture references</h3>
-        <ul id="lecture-list">
-          <li>Loading lecture references…</li>
-        </ul>
+      <section id="topic-chapter" class="flow-stage card-section" aria-labelledby="topic-title">
+        <div class="section-head">
+          <h2 id="topic-title">Topic / Chapter</h2>
+          <span class="stage-tag" aria-label="Step 2">2 of 5</span>
+        </div>
+        <p class="subtitle">Browse concept cards by chapter and choose what to learn next.</p>
+        <div id="concept-card-grid" class="concept-grid" role="listbox" aria-label="Concept cards"></div>
       </section>
 
-      <section id="play" class="card-section">
-        <h2>Play</h2>
-        <p>Experiment in sandbox activities that make formulas feel intuitive and visual.</p>
+      <section id="interactive-lesson" class="flow-stage card-section" aria-labelledby="lesson-title">
+        <div class="section-head">
+          <h2 id="lesson-title">Interactive Lesson</h2>
+          <span class="stage-tag" aria-label="Step 3">3 of 5</span>
+        </div>
+        <p class="subtitle">Read, manipulate, and test understanding before taking challenges.</p>
+        <div class="widget lesson-widget">
+          <h3>Lesson: Constant Acceleration Explorer</h3>
+          <p>Move the time slider to observe motion graphs and predict velocity changes.</p>
+          <article class="widget" data-component="quiz-widget" data-question="If acceleration is constant and positive, what happens to velocity over time?" data-options='["It remains constant","It increases linearly","It decreases exponentially"]' data-answer="1"></article>
+        </div>
       </section>
 
-      <section id="challenges" class="card-section">
-        <h2>Challenges</h2>
-        <p>Apply what you learn through daily tasks, quizzes, and puzzle sets.</p>
+      <section id="challenge" class="flow-stage card-section" aria-labelledby="challenge-title">
+        <div class="section-head">
+          <h2 id="challenge-title">Challenge</h2>
+          <span class="stage-tag" aria-label="Step 4">4 of 5</span>
+        </div>
+        <p class="subtitle">Apply what you just learned with timed and untimed quiz widgets.</p>
+        <div id="challenge-quiz" class="widget" data-component="quiz-widget" data-question="A cart starts from rest and accelerates at 2 m/s² for 4 s. Final velocity?" data-options='["4 m/s","8 m/s","16 m/s"]' data-answer="1"></div>
       </section>
 
-      <section id="progress" class="card-section">
-        <h2>Progress</h2>
-        <p>Track streaks, completion percentages, and concept mastery over time.</p>
-      </section>
-
-      <section id="profile" class="card-section">
-        <h2>Profile</h2>
-        <p>Manage your learning goals, accessibility preferences, and account details.</p>
+      <section id="reward-progress" class="flow-stage card-section" aria-labelledby="reward-title">
+        <div class="section-head">
+          <h2 id="reward-title">Reward / Progress</h2>
+          <span class="stage-tag" aria-label="Step 5">5 of 5</span>
+        </div>
+        <p class="subtitle">Review earned badges, XP milestones, and your next recommended lesson.</p>
+        <div class="reward-layout">
+          <article class="widget" data-component="progress-bar" data-value="42" data-label="Weekly challenge completion"></article>
+          <section id="badge-gallery" class="widget" aria-label="Badge gallery"></section>
+        </div>
       </section>
     </main>
 
