@@ -1,0 +1,15 @@
+{
+  "schema_version": "v1",
+  "generated_at": "2026-04-18T01:15:06.055783+00:00",
+  "lectures": [
+    {
+      "id": "v01-c01-s01-motion-in-one-dimension",
+      "title": "Motion in One Dimension",
+      "volume": 1,
+      "chapter": 1,
+      "section": 1,
+      "source_reference": "OPENSTAX-AP-1.1",
+      "path": "content/lectures/v1/v01-c01-s01-motion-in-one-dimension.json"
+    }
+  ]
+}

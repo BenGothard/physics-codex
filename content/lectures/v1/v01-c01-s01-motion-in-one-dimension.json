@@ -1,0 +1,20 @@
+{
+  "volume": 1,
+  "chapter": 1,
+  "section": 1,
+  "title": "Motion in One Dimension",
+  "summary": "Understanding motion starts with position, displacement, velocity, and acceleration. This lecture builds intuition with graphs and unit analysis before solving kinematics equations.",
+  "key_concepts": [
+    "Position and displacement",
+    "Average vs instantaneous velocity",
+    "Constant acceleration kinematics"
+  ],
+  "examples": [
+    "A cyclist accelerates from rest and travels 40 m in 5 s",
+    "Reading slope and area on a velocity-time graph"
+  ],
+  "source_reference": "OPENSTAX-AP-1.1",
+  "source_file": "volume1_chapter1_section1.txt",
+  "schema_version": "v1",
+  "ingested_at": "2026-04-18T01:15:06.055431+00:00"
+}

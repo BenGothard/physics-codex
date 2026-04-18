@@ -1,0 +1,14 @@
+Volume: 1
+Chapter: 1
+Section: 1
+Title: Motion in One Dimension
+Summary:
+Understanding motion starts with position, displacement, velocity, and acceleration. This lecture builds intuition with graphs and unit analysis before solving kinematics equations.
+Key Concepts:
+- Position and displacement
+- Average vs instantaneous velocity
+- Constant acceleration kinematics
+Examples:
+- A cyclist accelerates from rest and travels 40 m in 5 s
+- Reading slope and area on a velocity-time graph
+Source Reference: OPENSTAX-AP-1.1
