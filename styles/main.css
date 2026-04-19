@@ -168,6 +168,22 @@ main {
   font-size: 0.95rem;
 }
 
+.status-pill {
+  display: inline-block;
+  margin-top: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.status-pill.completed {
+  border-color: #66db96;
+  color: #c8ffe1;
+  background: #243126;
+}
+
 .progress-meter {
   width: 100%;
   height: 0.8rem;
@@ -233,6 +249,48 @@ main {
 .quiz-feedback {
   margin-top: 0.55rem;
   min-height: 1.4rem;
+}
+
+.lesson-content {
+  margin: 0.7rem 0;
+}
+
+.lesson-columns {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.lesson-columns h4 {
+  margin: 0 0 0.25rem;
+}
+
+.lesson-columns ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.notes-label {
+  display: block;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.lesson-notes {
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: #10193a;
+  color: var(--text);
+}
+
+.lesson-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.6rem;
 }
 
 .badge-grid {

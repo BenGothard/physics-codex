@@ -63,9 +63,16 @@
         </div>
         <p class="subtitle">Read, manipulate, and test understanding before taking challenges.</p>
         <div class="widget lesson-widget">
-          <h3>Lesson: Constant Acceleration Explorer</h3>
-          <p>Move the time slider to observe motion graphs and predict velocity changes.</p>
-          <article class="widget" data-component="quiz-widget" data-question="If acceleration is constant and positive, what happens to velocity over time?" data-options='["It remains constant","It increases linearly","It decreases exponentially"]' data-answer="1"></article>
+          <h3 id="active-lesson-title">Lesson</h3>
+          <p id="active-lesson-summary">Select a topic to start learning.</p>
+          <div id="lesson-content" class="lesson-content" aria-live="polite"></div>
+          <label class="notes-label" for="lesson-notes">My notes</label>
+          <textarea id="lesson-notes" class="lesson-notes" rows="4" placeholder="Write down formulas, questions, or key ideas..."></textarea>
+          <div class="lesson-actions">
+            <button id="save-notes-button" type="button" class="quiz-option">Save notes</button>
+            <button id="complete-lesson-button" type="button" class="quiz-option">Mark lesson complete</button>
+          </div>
+          <p id="lesson-status" class="tooltip-live" aria-live="polite"></p>
         </div>
       </section>
 
@@ -75,7 +82,7 @@
           <span class="stage-tag" aria-label="Step 4">4 of 5</span>
         </div>
         <p class="subtitle">Apply what you just learned with timed and untimed quiz widgets.</p>
-        <div id="challenge-quiz" class="widget" data-component="quiz-widget" data-question="A cart starts from rest and accelerates at 2 m/s² for 4 s. Final velocity?" data-options='["4 m/s","8 m/s","16 m/s"]' data-answer="1"></div>
+        <div id="challenge-quiz" class="widget"></div>
       </section>
 
       <section id="reward-progress" class="flow-stage card-section" aria-labelledby="reward-title">
