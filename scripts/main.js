@@ -4,12 +4,15 @@ if (yearEl) {
   yearEl.textContent = String(new Date().getFullYear());
 }
 
-const conceptCards = [
-  { title: 'Motion Foundations', chapter: 'Chapter 1', progress: 82, description: 'Displacement, speed, and frame of reference.' },
-  { title: 'Forces in Action', chapter: 'Chapter 2', progress: 58, description: 'Newtonian mechanics and free-body reasoning.' },
-  { title: 'Energy Transfers', chapter: 'Chapter 3', progress: 36, description: 'Work-energy theorem and conservation patterns.' },
-  { title: 'Oscillations', chapter: 'Chapter 4', progress: 14, description: 'Periodic motion and restoring forces.' }
-];
+const CONTENT_INDEX_PATH = 'content/lectures/v1/index.json';
+const STORAGE_KEY = 'physics-codex:lesson-state:v1';
+
+const state = {
+  lectures: [],
+  selectedLectureId: null,
+  completedLectureIds: new Set(),
+  notesByLectureId: {}
+};
 
 const badgeData = [
   { name: 'First Challenge', detail: 'Completed your first challenge' },
@@ -18,22 +21,64 @@ const badgeData = [
   { name: 'Chapter Climber', detail: 'Finished two chapters this week' }
 ];
 
+const escapeHtml = (value) =>
+  String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+
+const loadLocalState = () => {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed.completedLectureIds)) {
+      state.completedLectureIds = new Set(parsed.completedLectureIds);
+    }
+    if (parsed.notesByLectureId && typeof parsed.notesByLectureId === 'object') {
+      state.notesByLectureId = parsed.notesByLectureId;
+    }
+  } catch (error) {
+    // Ignore malformed local state and continue with defaults.
+  }
+};
+
+const persistLocalState = () => {
+  window.localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify({
+      completedLectureIds: [...state.completedLectureIds],
+      notesByLectureId: state.notesByLectureId
+    })
+  );
+};
+
 const renderProgressBar = (element) => {
-  const value = Number(element.dataset.value || 0);
   const label = element.dataset.label || 'Progress';
+  const rawValue = Number(element.dataset.value || 0);
+  const completion =
+    state.lectures.length > 0 && label.toLowerCase().includes('mastery')
+      ? Math.round((state.completedLectureIds.size / state.lectures.length) * 100)
+      : rawValue;
 
   element.innerHTML = `
     <h3>${label}</h3>
-    <div class="progress-meter" role="progressbar" aria-label="${label}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${value}">
-      <span style="width:${Math.min(100, Math.max(0, value))}%"></span>
+    <div class="progress-meter" role="progressbar" aria-label="${label}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${completion}">
+      <span style="width:${Math.min(100, Math.max(0, completion))}%"></span>
     </div>
-    <p>${value}% complete</p>
+    <p>${completion}% complete</p>
   `;
 };
 
 const renderStreakIndicator = (element) => {
-  const days = Number(element.dataset.days || 0);
-  const best = Number(element.dataset.best || 0);
+  const fallbackDays = Number(element.dataset.days || 0);
+  const fallbackBest = Number(element.dataset.best || 0);
+  const gamification = window.PhysicsCodexGamification?.getProgressSnapshot?.();
+  const streak = gamification?.learner?.streak;
+  const days = streak?.current ?? fallbackDays;
+  const best = streak?.longest ?? fallbackBest;
 
   element.innerHTML = `
     <h3>Streak</h3>
@@ -42,14 +87,16 @@ const renderStreakIndicator = (element) => {
   `;
 };
 
-const renderQuizWidget = (element) => {
-  const question = element.dataset.question || 'Question unavailable.';
-  const answerIndex = Number(element.dataset.answer || -1);
-  const options = JSON.parse(element.dataset.options || '[]');
+const renderQuizWidget = (element, quizData) => {
+  const question = quizData.question || 'Question unavailable.';
+  const answerIndex = Number(quizData.answer || -1);
+  const options = Array.isArray(quizData.options) ? quizData.options : [];
+  const onCorrect = typeof quizData.onCorrect === 'function' ? quizData.onCorrect : () => {};
 
   element.innerHTML = '';
   const title = document.createElement('h3');
-  title.textContent = 'Quiz Widget';
+  title.textContent = quizData.title || 'Quiz Widget';
+
   const prompt = document.createElement('p');
   prompt.textContent = question;
 
@@ -59,6 +106,8 @@ const renderQuizWidget = (element) => {
   const feedback = document.createElement('div');
   feedback.className = 'quiz-feedback';
   feedback.setAttribute('aria-live', 'polite');
+
+  let solved = false;
 
   options.forEach((option, index) => {
     const button = document.createElement('button');
@@ -70,6 +119,11 @@ const renderQuizWidget = (element) => {
       const correct = index === answerIndex;
       feedback.textContent = correct ? '✅ Correct! Nice reasoning.' : '❗ Not quite—try again.';
       feedback.style.color = correct ? 'var(--success)' : 'var(--warning)';
+
+      if (correct && !solved) {
+        solved = true;
+        onCorrect();
+      }
     });
     optionWrapper.appendChild(button);
   });
@@ -83,19 +137,35 @@ const renderConceptCards = () => {
 
   container.innerHTML = '';
 
-  conceptCards.forEach((card, index) => {
+  state.lectures.forEach((lecture, index) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'concept-card';
     button.setAttribute('role', 'option');
-    button.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+    button.setAttribute('aria-selected', lecture.id === state.selectedLectureId ? 'true' : 'false');
     button.setAttribute('tabindex', index === 0 ? '0' : '-1');
-    button.setAttribute('aria-label', `${card.title}, ${card.chapter}, ${card.progress}% complete`);
-    button.innerHTML = `<strong>${card.title}</strong><p>${card.chapter} · ${card.progress}% complete</p><p>${card.description}</p>`;
+    button.setAttribute(
+      'aria-label',
+      `${lecture.title}, Chapter ${lecture.chapter}, ${state.completedLectureIds.has(lecture.id) ? 'completed' : 'not completed'}`
+    );
+
+    const completionTag = state.completedLectureIds.has(lecture.id)
+      ? '<span class="status-pill completed">Completed</span>'
+      : '<span class="status-pill">In progress</span>';
+
+    button.innerHTML = `
+      <strong>${escapeHtml(lecture.title)}</strong>
+      <p>Chapter ${lecture.chapter} · Section ${lecture.section}</p>
+      <p>${completionTag}</p>
+    `;
+
     button.addEventListener('click', () => {
-      document.querySelectorAll('.concept-card').forEach((el) => el.setAttribute('aria-selected', 'false'));
-      button.setAttribute('aria-selected', 'true');
+      state.selectedLectureId = lecture.id;
+      renderConceptCards();
+      renderLesson();
+      renderChallengeQuiz();
     });
+
     container.appendChild(button);
   });
 
@@ -120,6 +190,77 @@ const renderConceptCards = () => {
       prev.tabIndex = 0;
       prev.focus();
       event.preventDefault();
+    }
+  });
+};
+
+const renderLesson = () => {
+  const lecture = state.lectures.find((item) => item.id === state.selectedLectureId);
+  const titleEl = document.querySelector('#active-lesson-title');
+  const summaryEl = document.querySelector('#active-lesson-summary');
+  const contentEl = document.querySelector('#lesson-content');
+  const notesEl = document.querySelector('#lesson-notes');
+
+  if (!titleEl || !summaryEl || !contentEl || !notesEl || !lecture) return;
+
+  titleEl.textContent = `Lesson: ${lecture.title}`;
+  summaryEl.textContent = lecture.summary || 'Explore this lesson and complete the challenge to reinforce your understanding.';
+
+  const concepts = (lecture.key_concepts || []).map((concept) => `<li>${escapeHtml(concept)}</li>`).join('');
+  const examples = (lecture.examples || []).map((example) => `<li>${escapeHtml(example)}</li>`).join('');
+
+  contentEl.innerHTML = `
+    <div class="lesson-columns">
+      <div>
+        <h4>Key concepts</h4>
+        <ul>${concepts || '<li>Content coming soon.</li>'}</ul>
+      </div>
+      <div>
+        <h4>Worked examples</h4>
+        <ul>${examples || '<li>Examples coming soon.</li>'}</ul>
+      </div>
+    </div>
+  `;
+
+  notesEl.value = state.notesByLectureId[lecture.id] || '';
+};
+
+const getLectureForChallenge = () => state.lectures.find((item) => item.id === state.selectedLectureId);
+
+const buildChallengeForLecture = (lecture) => {
+  const concepts = lecture?.key_concepts || [];
+  const answer = concepts[0] || 'Constant acceleration kinematics';
+  const distractors = [
+    'Momentum is always conserved in isolated systems',
+    'Electric fields are created only by moving charges',
+    'Wave speed is independent of medium properties'
+  ];
+
+  const options = [answer, ...distractors.slice(0, 2)].sort(() => Math.random() - 0.5);
+  return {
+    title: 'Concept Check',
+    question: `Which idea is directly emphasized in ${lecture?.title || 'this lesson'}?`,
+    options,
+    answer: options.indexOf(answer)
+  };
+};
+
+const updateDashboardWidgets = () => {
+  document.querySelectorAll('[data-component="progress-bar"]').forEach(renderProgressBar);
+  document.querySelectorAll('[data-component="streak-indicator"]').forEach(renderStreakIndicator);
+};
+
+const renderChallengeQuiz = () => {
+  const container = document.querySelector('#challenge-quiz');
+  const lecture = getLectureForChallenge();
+  if (!container || !lecture) return;
+
+  const quiz = buildChallengeForLecture(lecture);
+  renderQuizWidget(container, {
+    ...quiz,
+    onCorrect: () => {
+      window.PhysicsCodexGamification?.recordChallengeCompletion?.('multiple_choice');
+      updateDashboardWidgets();
     }
   });
 };
@@ -160,13 +301,83 @@ const bindHintTooltips = () => {
   });
 };
 
-const hydrateReusableComponents = () => {
-  document.querySelectorAll('[data-component="progress-bar"]').forEach(renderProgressBar);
-  document.querySelectorAll('[data-component="streak-indicator"]').forEach(renderStreakIndicator);
-  document.querySelectorAll('[data-component="quiz-widget"]').forEach(renderQuizWidget);
+const bindLessonActions = () => {
+  const saveButton = document.querySelector('#save-notes-button');
+  const completeButton = document.querySelector('#complete-lesson-button');
+  const notesEl = document.querySelector('#lesson-notes');
+  const statusEl = document.querySelector('#lesson-status');
+
+  if (saveButton && notesEl) {
+    saveButton.addEventListener('click', () => {
+      const lecture = getLectureForChallenge();
+      if (!lecture) return;
+      state.notesByLectureId[lecture.id] = notesEl.value.trim();
+      persistLocalState();
+      if (statusEl) statusEl.textContent = 'Notes saved locally on this device.';
+    });
+  }
+
+  if (completeButton) {
+    completeButton.addEventListener('click', () => {
+      const lecture = getLectureForChallenge();
+      if (!lecture) return;
+      state.completedLectureIds.add(lecture.id);
+      window.PhysicsCodexGamification?.completeQuest?.('quest-motion-basics', { lectureId: lecture.id });
+      persistLocalState();
+      renderConceptCards();
+      updateDashboardWidgets();
+      if (statusEl) statusEl.textContent = `${lecture.title} marked complete.`;
+    });
+  }
 };
 
-hydrateReusableComponents();
-renderConceptCards();
-renderBadgeGallery();
-bindHintTooltips();
+const loadLectures = async () => {
+  const response = await fetch(CONTENT_INDEX_PATH);
+  if (!response.ok) {
+    throw new Error(`Unable to load lecture index (${response.status}).`);
+  }
+
+  const index = await response.json();
+  const lectureRecords = Array.isArray(index.lectures) ? index.lectures : [];
+
+  const lectures = await Promise.all(
+    lectureRecords.map(async (record) => {
+      const lectureResponse = await fetch(record.path);
+      if (!lectureResponse.ok) {
+        throw new Error(`Unable to load lecture file: ${record.path}`);
+      }
+
+      const detail = await lectureResponse.json();
+      return {
+        ...record,
+        ...detail
+      };
+    })
+  );
+
+  return lectures;
+};
+
+const bootstrap = async () => {
+  bindHintTooltips();
+  bindLessonActions();
+  renderBadgeGallery();
+  loadLocalState();
+
+  try {
+    state.lectures = await loadLectures();
+    state.selectedLectureId = state.lectures[0]?.id || null;
+
+    renderConceptCards();
+    renderLesson();
+    renderChallengeQuiz();
+    updateDashboardWidgets();
+  } catch (error) {
+    const conceptGrid = document.querySelector('#concept-card-grid');
+    if (conceptGrid) {
+      conceptGrid.innerHTML = `<p>Unable to load lecture content. Run a local server (for example, <code>python3 -m http.server 8080</code>) and refresh.</p>`;
+    }
+  }
+};
+
+bootstrap();
