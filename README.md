@@ -66,20 +66,30 @@ Then visit `http://localhost:8080`.
 
 ## GitHub Pages deployment
 
-This scaffold supports either GitHub Pages source mode:
+This repository includes an Actions workflow at `.github/workflows/deploy-pages.yml` that:
 
-### Serve from repository root (`/`)
+1. Runs on pushes to `main` (and manually via `workflow_dispatch`).
+2. Builds a deploy artifact in `dist/`.
+3. Detects whether the repository is a **user/org site** (`<owner>.github.io`) or a **project site**.
+4. Injects a `<base href="...">` in the built `index.html` so routes/assets resolve correctly:
+   - User/org site: `/`
+   - Project site: `/<repository-name>/`
+5. Deploys with `actions/deploy-pages`.
 
-1. In GitHub: **Settings → Pages**.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select your branch (for example, `main`) and folder **`/ (root)`**.
-4. Save.
+### Required GitHub repository settings
 
-### Serve from `/docs`
+1. Go to **Settings → Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+3. Go to **Settings → Actions → General** and ensure workflow permissions allow deployments:
+   - **Read repository contents and packages** (minimum)
+   - The workflow itself requests `pages: write` and `id-token: write` permissions for deployment.
+4. (Optional) Configure a custom domain in **Settings → Pages → Custom domain**, then enable **Enforce HTTPS** once DNS is propagated.
 
-1. In GitHub: **Settings → Pages**.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select your branch and folder **`/docs`**.
-4. Save.
+### Post-deploy smoke checklist
 
-`docs/index.html` includes a redirect to `../index.html` so Pages can be configured consistently while keeping the main source at repo root.
+After each deploy, validate the published URL (from the workflow run output):
+
+- [ ] Home page loads without console errors.
+- [ ] In-page routes/anchors resolve correctly (`#dashboard`, `#topic-chapter`, `#interactive-lesson`, etc.).
+- [ ] Static assets resolve (CSS and JavaScript load from the expected Pages base path).
+- [ ] Content data files resolve (for example `content/lectures/v1/index.json` returns `200 OK`).
