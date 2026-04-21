@@ -3,104 +3,144 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Physics Codex: learn concepts, play simulations, solve challenges, and track progress." />
+    <meta
+      name="description"
+      content="Physics Codex is a static self-study physics tutor with lesson structure, interactive practice, and local progress tracking."
+    />
     <title>Physics Codex</title>
     <link rel="stylesheet" href="styles/main.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header">
-      <div class="brand">Physics Codex</div>
-      <nav aria-label="Primary" class="primary-nav">
-        <ul>
-          <li><a href="#dashboard">Dashboard</a></li>
-          <li><a href="#topic-chapter">Topic</a></li>
-          <li><a href="#interactive-lesson">Lesson</a></li>
-          <li><a href="#challenge">Challenge</a></li>
-          <li><a href="#reward-progress">Progress</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <main id="main" aria-label="Physics learning flow">
-      <section id="dashboard" class="flow-stage card-section" aria-labelledby="dashboard-title">
-        <div class="section-head">
-          <h1 id="dashboard-title">Home Dashboard</h1>
-          <a class="button-link" href="#interactive-lesson" aria-label="Continue where you left off at lesson 3">Continue where you left off</a>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="brand-lockup">
+          <p class="eyebrow">Physics Codex v1.5</p>
+          <div class="brand">Physics Codex</div>
         </div>
-        <p class="subtitle">Pick up your personalized learning path and jump back into your active lesson in one step.</p>
-
-        <div class="progress-overview" aria-label="Overall progress snapshot">
-          <article class="widget" data-component="progress-bar" data-value="68" data-label="Course mastery"></article>
-          <article class="widget" data-component="streak-indicator" data-days="6" data-best="14"></article>
-        </div>
-
-        <section aria-labelledby="onboarding-title" class="widget">
-          <h2 id="onboarding-title">Quick Start Hints</h2>
-          <ul class="hint-list">
-            <li><button type="button" class="hint-chip" data-tooltip="Use Tab/Shift+Tab to move between cards and Enter/Space to open one.">Keyboard Navigation</button></li>
-            <li><button type="button" class="hint-chip" data-tooltip="Use the Topic stage to filter by chapter and difficulty.">Choose a Chapter</button></li>
-            <li><button type="button" class="hint-chip" data-tooltip="Earn streak bonuses by finishing at least one challenge each day.">Build Your Streak</button></li>
+        <nav aria-label="Primary" class="primary-nav">
+          <ul>
+            <li><a href="#dashboard">Overview</a></li>
+            <li><a href="#units">Units</a></li>
+            <li><a href="#lesson">Lesson</a></li>
+            <li><a href="#practice">Practice</a></li>
+            <li><a href="#progress">Progress</a></li>
           </ul>
-          <p id="tooltip-live" class="tooltip-live" aria-live="polite">Focus a hint to hear tips.</p>
-        </section>
-      </section>
+        </nav>
+      </header>
 
-      <section id="topic-chapter" class="flow-stage card-section" aria-labelledby="topic-title">
-        <div class="section-head">
-          <h2 id="topic-title">Topic / Chapter</h2>
-          <span class="stage-tag" aria-label="Step 2">2 of 5</span>
-        </div>
-        <p class="subtitle">Browse concept cards by chapter and choose what to learn next.</p>
-        <div id="concept-card-grid" class="concept-grid" role="listbox" aria-label="Concept cards"></div>
-      </section>
-
-      <section id="interactive-lesson" class="flow-stage card-section" aria-labelledby="lesson-title">
-        <div class="section-head">
-          <h2 id="lesson-title">Interactive Lesson</h2>
-          <span class="stage-tag" aria-label="Step 3">3 of 5</span>
-        </div>
-        <p class="subtitle">Read, manipulate, and test understanding before taking challenges.</p>
-        <div class="widget lesson-widget">
-          <h3 id="active-lesson-title">Lesson</h3>
-          <p id="active-lesson-summary">Select a topic to start learning.</p>
-          <div id="lesson-content" class="lesson-content" aria-live="polite"></div>
-          <label class="notes-label" for="lesson-notes">My notes</label>
-          <textarea id="lesson-notes" class="lesson-notes" rows="4" placeholder="Write down formulas, questions, or key ideas..."></textarea>
-          <div class="lesson-actions">
-            <button id="save-notes-button" type="button" class="quiz-option">Save notes</button>
-            <button id="complete-lesson-button" type="button" class="quiz-option">Mark lesson complete</button>
+      <main id="main">
+        <section id="dashboard" class="hero-section">
+          <div class="hero-copy">
+            <p class="hero-kicker">College self-study physics</p>
+            <h1>Learn the logic behind motion, then test it with practice that feels like a tutor session.</h1>
+            <p class="hero-summary">
+              Physics Codex organizes each unit around clear objectives, interactive lesson blocks, and challenge types that
+              push past passive reading.
+            </p>
+            <div class="hero-actions">
+              <a id="resume-link" class="button-link button-link-primary" href="#lesson">Resume recommended lesson</a>
+              <a class="button-link button-link-secondary" href="#units">Browse the unit map</a>
+            </div>
           </div>
-          <p id="lesson-status" class="tooltip-live" aria-live="polite"></p>
-        </div>
-      </section>
+          <div class="hero-panel" aria-label="Current study pulse">
+            <div class="hero-panel-grid">
+              <article id="study-pulse-card" class="info-panel"></article>
+              <article id="recommended-card" class="info-panel"></article>
+              <article id="streak-card" class="info-panel"></article>
+              <article id="level-card" class="info-panel"></article>
+            </div>
+          </div>
+        </section>
 
-      <section id="challenge" class="flow-stage card-section" aria-labelledby="challenge-title">
-        <div class="section-head">
-          <h2 id="challenge-title">Challenge</h2>
-          <span class="stage-tag" aria-label="Step 4">4 of 5</span>
-        </div>
-        <p class="subtitle">Apply what you just learned with timed and untimed quiz widgets.</p>
-        <div id="challenge-quiz" class="widget"></div>
-      </section>
+        <section id="units" class="section-block" aria-labelledby="units-title">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Unit map</p>
+              <h2 id="units-title">Move through one polished foundation unit, not a pile of disconnected cards.</h2>
+            </div>
+            <p class="section-note">Choose a lesson to load it into the lesson and practice workspaces below.</p>
+          </div>
+          <div id="unit-grid" class="unit-grid" aria-live="polite"></div>
+        </section>
 
-      <section id="reward-progress" class="flow-stage card-section" aria-labelledby="reward-title">
-        <div class="section-head">
-          <h2 id="reward-title">Reward / Progress</h2>
-          <span class="stage-tag" aria-label="Step 5">5 of 5</span>
-        </div>
-        <p class="subtitle">Review earned badges, XP milestones, and your next recommended lesson.</p>
-        <div class="reward-layout">
-          <article class="widget" data-component="progress-bar" data-value="42" data-label="Weekly challenge completion"></article>
-          <section id="badge-gallery" class="widget" aria-label="Badge gallery"></section>
-        </div>
-      </section>
-    </main>
+        <section id="lesson" class="section-block lesson-section" aria-labelledby="lesson-title">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Lesson workspace</p>
+              <h2 id="lesson-title">Structured explanations, equations, examples, and interactive checkpoints.</h2>
+            </div>
+            <div id="lesson-meta" class="section-note"></div>
+          </div>
 
-    <footer class="site-footer">
-      <small>© <span id="year"></span> Physics Codex</small>
-    </footer>
+          <div class="lesson-header">
+            <div>
+              <p id="active-lesson-badge" class="lesson-badge">Lesson</p>
+              <h3 id="active-lesson-title">Select a lesson</h3>
+              <p id="active-lesson-summary" class="lesson-summary">
+                Choose a lesson from the unit map to open the full guided lesson workspace.
+              </p>
+            </div>
+            <div class="lesson-toolbar">
+              <button id="complete-lesson-button" type="button" class="button-link button-link-primary">Mark lesson complete</button>
+              <button id="save-notes-button" type="button" class="button-link button-link-secondary">Save notes</button>
+            </div>
+          </div>
+
+          <div id="lesson-content" class="lesson-content" aria-live="polite"></div>
+
+          <div class="notes-panel">
+            <label class="notes-label" for="lesson-notes">Study notes</label>
+            <textarea
+              id="lesson-notes"
+              class="lesson-notes"
+              rows="5"
+              placeholder="Capture formulas, assumptions, and questions you want to revisit."
+            ></textarea>
+            <p id="lesson-status" class="status-text" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <section id="practice" class="section-block practice-section" aria-labelledby="practice-title">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Practice studio</p>
+              <h2 id="practice-title">Cycle through four challenge modes that reinforce the current lesson from different angles.</h2>
+            </div>
+            <p id="practice-summary" class="section-note"></p>
+          </div>
+
+          <div id="challenge-tablist" class="challenge-tablist" role="tablist" aria-label="Challenge types"></div>
+          <div id="challenge-stage" class="challenge-stage" aria-live="polite"></div>
+        </section>
+
+        <section id="progress" class="section-block progress-section" aria-labelledby="progress-title">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Progress ledger</p>
+              <h2 id="progress-title">See completion, badges, unit momentum, and what to study next.</h2>
+            </div>
+            <p id="progress-note" class="section-note">Everything is stored locally on this device with a versioned progress model.</p>
+          </div>
+
+          <div class="progress-layout">
+            <div class="progress-column">
+              <article id="progress-overview-card" class="info-panel info-panel-large"></article>
+              <article id="unit-progress-card" class="info-panel info-panel-large"></article>
+            </div>
+            <div class="progress-column">
+              <section id="badge-gallery" class="info-panel info-panel-large" aria-label="Badge gallery"></section>
+              <section id="history-panel" class="info-panel info-panel-large" aria-label="Recent challenge history"></section>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <small>© <span id="year"></span> Physics Codex</small>
+      </footer>
+    </div>
 
     <script src="scripts/gamification.js"></script>
     <script src="scripts/main.js"></script>
