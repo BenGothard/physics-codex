@@ -1,6 +1,6 @@
 {
   "schema_version": "v1",
-  "generated_at": "2026-04-18T01:15:06.055783+00:00",
+  "generated_at": "2026-04-21T02:29:30.543547+00:00",
   "lectures": [
     {
       "id": "v01-c01-s01-motion-in-one-dimension",
@@ -8,8 +8,41 @@
       "volume": 1,
       "chapter": 1,
       "section": 1,
+      "unit_title": "Kinematics Foundations",
+      "unit_slug": "kinematics-foundations",
+      "unit_summary": "Build the language of motion first, then connect it to graphs and acceleration models before tackling harder mechanics.",
+      "estimated_minutes": 18,
+      "summary": "Start with position, displacement, and average velocity so later graph and acceleration work has a clean conceptual base.",
       "source_reference": "OPENSTAX-AP-1.1",
       "path": "content/lectures/v1/v01-c01-s01-motion-in-one-dimension.json"
+    },
+    {
+      "id": "v01-c01-s02-velocity-time-graphs",
+      "title": "Velocity-Time Graphs",
+      "volume": 1,
+      "chapter": 1,
+      "section": 2,
+      "unit_title": "Kinematics Foundations",
+      "unit_slug": "kinematics-foundations",
+      "unit_summary": "Build the language of motion first, then connect it to graphs and acceleration models before tackling harder mechanics.",
+      "estimated_minutes": 20,
+      "summary": "Translate motion descriptions into velocity-time graphs and use slope or area cues without guessing from the picture alone.",
+      "source_reference": "OPENSTAX-AP-1.1",
+      "path": "content/lectures/v1/v01-c01-s02-velocity-time-graphs.json"
+    },
+    {
+      "id": "v01-c01-s03-constant-acceleration-models",
+      "title": "Constant Acceleration Models",
+      "volume": 1,
+      "chapter": 1,
+      "section": 3,
+      "unit_title": "Kinematics Foundations",
+      "unit_slug": "kinematics-foundations",
+      "unit_summary": "Build the language of motion first, then connect it to graphs and acceleration models before tackling harder mechanics.",
+      "estimated_minutes": 22,
+      "summary": "Use constant-acceleration relationships to connect changing velocity, elapsed time, and displacement in one coherent model.",
+      "source_reference": "OPENSTAX-AP-1.1",
+      "path": "content/lectures/v1/v01-c01-s03-constant-acceleration-models.json"
     }
   ]
 }

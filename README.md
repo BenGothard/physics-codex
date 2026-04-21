@@ -1,12 +1,11 @@
 # Physics Codex
 
-A lightweight static web app scaffold for learning physics with a clear top-level information architecture:
+Physics Codex is a static self-study physics tutor aimed at college-intro learners. It keeps the deployment model lightweight while expanding the learning experience into:
 
-- Learn
-- Play
-- Challenges
-- Progress
-- Profile
+- structured lessons with objectives, equations, worked examples, and common mistakes
+- inline interactive labs driven by lecture JSON content
+- four challenge modes per lesson
+- local progress, notes, streaks, XP, badges, and recommendation logic
 
 ## Project structure
 
@@ -22,12 +21,32 @@ A lightweight static web app scaffold for learning physics with a clear top-leve
 ├── docs/
 ├── index.html
 ├── scripts/
+│   ├── gamification.js
 │   ├── ingest_lectures.py
 │   ├── main.js
 │   └── validate_content.py
 └── styles/
     └── main.css
 ```
+
+## Raw content format
+
+Each source file under `content/raw/*.txt` uses labeled sections. In addition to the original lecture summary fields, the v1.5 format includes:
+
+- `Unit Title`
+- `Unit Slug`
+- `Unit Summary`
+- `Estimated Minutes`
+- `Learning Objectives`
+- `Quick Recap`
+- `Equations`
+- `Worked Examples`
+- `Common Mistakes`
+- `Checkpoints`
+- `Interactive Lab`
+- `Challenge Sets`
+
+Object-heavy sections use pipe-delimited key/value fields on bullet lines. Lists inside those objects use `||` as the separator.
 
 ## Content ingestion workflow
 
@@ -38,7 +57,7 @@ A lightweight static web app scaffold for learning physics with a clear top-leve
 python3 scripts/ingest_lectures.py --version v1
 ```
 
-3. Validate all chapter files before publishing:
+3. Validate all lecture files before publishing:
 
 ```bash
 python3 scripts/validate_content.py --lectures-dir content/lectures
@@ -48,15 +67,7 @@ python3 scripts/validate_content.py --lectures-dir content/lectures
 
 ## Local preview
 
-Because this is static HTML/CSS/JS, you can preview it in several ways.
-
-### Option 1: Open directly
-
-Open `index.html` in your browser.
-
-### Option 2: Run a local static server (recommended)
-
-From the repo root:
+Because this is static HTML/CSS/JS, use a local static server for reliable content fetches:
 
 ```bash
 python3 -m http.server 8080
@@ -68,28 +79,16 @@ Then visit `http://localhost:8080`.
 
 This repository includes an Actions workflow at `.github/workflows/deploy-pages.yml` that:
 
-1. Runs on pushes to `main` (and manually via `workflow_dispatch`).
+1. Runs on pushes to `main` and via `workflow_dispatch`.
 2. Builds a deploy artifact in `dist/`.
-3. Detects whether the repository is a **user/org site** (`<owner>.github.io`) or a **project site**.
-4. Injects a `<base href="...">` in the built `index.html` so routes/assets resolve correctly:
-   - User/org site: `/`
-   - Project site: `/<repository-name>/`
+3. Detects whether the repository is a user/org site or project site.
+4. Injects the correct `<base href="...">` into the built `index.html`.
 5. Deploys with `actions/deploy-pages`.
 
-### Required GitHub repository settings
-
-1. Go to **Settings → Pages**.
-2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-3. Go to **Settings → Actions → General** and ensure workflow permissions allow deployments:
-   - **Read repository contents and packages** (minimum)
-   - The workflow itself requests `pages: write` and `id-token: write` permissions for deployment.
-4. (Optional) Configure a custom domain in **Settings → Pages → Custom domain**, then enable **Enforce HTTPS** once DNS is propagated.
-
-### Post-deploy smoke checklist
-
-After each deploy, validate the published URL (from the workflow run output):
+## Post-deploy smoke checklist
 
 - [ ] Home page loads without console errors.
-- [ ] In-page routes/anchors resolve correctly (`#dashboard`, `#topic-chapter`, `#interactive-lesson`, etc.).
-- [ ] Static assets resolve (CSS and JavaScript load from the expected Pages base path).
-- [ ] Content data files resolve (for example `content/lectures/v1/index.json` returns `200 OK`).
+- [ ] Unit selection loads the correct lesson and practice content.
+- [ ] Notes and completion state persist after refresh.
+- [ ] Each challenge mode renders and records progress correctly.
+- [ ] Static assets and lecture JSON resolve from the correct GitHub Pages base path.

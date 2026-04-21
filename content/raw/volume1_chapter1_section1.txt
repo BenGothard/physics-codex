@@ -1,14 +1,44 @@
 Volume: 1
 Chapter: 1
 Section: 1
+Unit Title: Kinematics Foundations
+Unit Slug: kinematics-foundations
+Unit Summary:
+Build the language of motion first, then connect it to graphs and acceleration models before tackling harder mechanics.
 Title: Motion in One Dimension
+Estimated Minutes: 18
 Summary:
-Understanding motion starts with position, displacement, velocity, and acceleration. This lecture builds intuition with graphs and unit analysis before solving kinematics equations.
+Start with position, displacement, and average velocity so later graph and acceleration work has a clean conceptual base.
+Learning Objectives:
+- Distinguish displacement from total distance traveled.
+- Compute average velocity from a motion description.
+- Explain why sign and reference direction matter in one-dimensional motion.
 Key Concepts:
 - Position and displacement
-- Average vs instantaneous velocity
-- Constant acceleration kinematics
+- Average velocity
+- Reference frames and sign conventions
 Examples:
-- A cyclist accelerates from rest and travels 40 m in 5 s
-- Reading slope and area on a velocity-time graph
+- A shuttle cart moving east then back toward its start
+- A runner finishing a lap at the starting line
+Quick Recap:
+Displacement tracks net change in position, not total path length, and average velocity uses displacement divided by elapsed time.
+Equations:
+- name: Displacement | expression: Delta x = x_f - x_i | meaning: Measures net change in position. | variables: x_f is final position and x_i is initial position.
+- name: Average velocity | expression: v_avg = Delta x / Delta t | meaning: Connects displacement to elapsed time. | variables: Delta x is displacement and Delta t is elapsed time.
+Worked Examples:
+- title: Shuttle cart run | problem: A cart starts at 2 m, rolls to 14 m, and ends at 9 m after 7 s. | steps: Identify the initial and final positions. || Compute net displacement from final minus initial position. || Divide displacement by elapsed time to find average velocity. | answer: The displacement is 7 m and the average velocity is 1 m/s to the right.
+- title: Runner on a short track | problem: A runner goes 30 m east and then 30 m west in 20 s. | steps: Notice that the final position matches the initial position. || Compute displacement instead of total distance. || Use zero displacement in the average velocity equation. | answer: The displacement is 0 m so the average velocity is 0 m/s.
+Common Mistakes:
+- mistake: Treating distance traveled and displacement as interchangeable. | correction: Distance is the full path length while displacement is only the net change between start and finish.
+- mistake: Dropping direction from velocity statements. | correction: Velocity needs sign or direction because it depends on displacement, not just magnitude.
+Checkpoints:
+- prompt: If you walk 4 m east and 1 m west, what is your displacement. | prediction: Write your prediction before revealing the explanation. | reveal: The displacement is 3 m east because only the net change from start to finish matters.
+- prompt: If a motion ends where it began, what must be true about the average velocity. | prediction: Use the displacement definition before opening the tutor note. | reveal: Average velocity must be zero because displacement is zero over the full interval.
+Interactive Lab:
+- title: Average velocity lens | prompt: Adjust displacement and time to see how the ratio changes. | x_key: displacement | x_label: Displacement | x_min: 0 | x_max: 60 | x_step: 1 | x_default: 24 | x_unit: m | y_key: time | y_label: Time | y_min: 1 | y_max: 12 | y_step: 1 | y_default: 4 | y_unit: s | formula: displacement / time | output_label: Average velocity | output_unit: m/s | output_precision: 2 | insight: Larger displacement at the same time steepens the motion while more time softens the average velocity.
+Challenge Sets:
+- id: c1-motion-mc | type: multiple_choice | title: Net change first | prompt: Which statement best describes displacement. | options: It is the net change in position. || It is the same as total distance in every trip. || It ignores direction and only tracks magnitude. || It is undefined when an object returns to start. | answer: 0 | explanation: Displacement compares only the initial and final positions, so the path in between does not control its value.
+- id: c1-motion-match | type: concept_match | title: Match the language | prompt: Match each term to the correct definition. | pairs: displacement=>net change in position || distance=>total path length || average velocity=>displacement divided by elapsed time | explanation: These three ideas separate path length, net change, and rate of change.
+- id: c1-motion-estimate | type: estimation_puzzle | title: Hallway pacing estimate | prompt: Estimate your average walking velocity if you cover about 18 m of displacement down a hallway in 12 s. | rubric: State a displacement, divide by the time, and keep units visible. | sample_answer: A reasonable estimate is 18 m divided by 12 s, which is about 1.5 m/s. That is a believable indoor walking speed. | explanation: Good estimation work shows assumptions, units, and a quick check that the value is physically reasonable.
+- id: c1-motion-derive | type: derivation_steps | title: Build the average velocity relation | prompt: Select the steps in the order that makes the average velocity equation. | steps: Start from the definition of displacement. || Identify the elapsed time interval. || Divide displacement by elapsed time. | solution_order: 0,1,2 | explanation: The logic flows from the displacement definition to elapsed time and finally the ratio that defines average velocity.
 Source Reference: OPENSTAX-AP-1.1

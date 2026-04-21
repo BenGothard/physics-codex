@@ -1,0 +1,178 @@
+{
+  "volume": 1,
+  "chapter": 1,
+  "section": 3,
+  "unit_title": "Kinematics Foundations",
+  "unit_slug": "kinematics-foundations",
+  "unit_summary": "Build the language of motion first, then connect it to graphs and acceleration models before tackling harder mechanics.",
+  "title": "Constant Acceleration Models",
+  "estimated_minutes": 22,
+  "summary": "Use constant-acceleration relationships to connect changing velocity, elapsed time, and displacement in one coherent model.",
+  "learning_objectives": [
+    "Relate acceleration to changes in velocity over time.",
+    "Use constant-acceleration equations with clear variable meaning.",
+    "Check whether a numerical answer matches the direction of motion story."
+  ],
+  "key_concepts": [
+    "Constant acceleration",
+    "Velocity change over time",
+    "Kinematics equations as linked models"
+  ],
+  "examples": [
+    "A skateboarder speeding up on a straight path",
+    "A braking car losing speed steadily"
+  ],
+  "quick_recap": "Constant acceleration means the rate of change of velocity stays fixed, so the velocity-time graph is a straight line and algebraic models stay consistent.",
+  "equations": [
+    {
+      "name": "Velocity update",
+      "expression": "v_f = v_i + a t",
+      "meaning": "Final velocity changes linearly when acceleration stays constant.",
+      "variables": "v_i is initial velocity, a is acceleration, and t is elapsed time."
+    },
+    {
+      "name": "Displacement update",
+      "expression": "Delta x = v_i t + 1/2 a t^2",
+      "meaning": "Displacement combines the starting velocity contribution with the acceleration contribution.",
+      "variables": "v_i is initial velocity, a is acceleration, and t is elapsed time."
+    }
+  ],
+  "worked_examples": [
+    {
+      "title": "Board launch",
+      "problem": "A board starts from rest and accelerates at 2.5 m/s squared for 4 s.",
+      "steps": [
+        "Use the velocity update equation with v_i equal to zero.",
+        "Multiply acceleration by time to get the velocity change.",
+        "Check that the final velocity direction matches the positive acceleration."
+      ],
+      "answer": "The final velocity is 10 m/s in the positive direction."
+    },
+    {
+      "title": "Braking car",
+      "problem": "A car moving at 20 m/s slows at -3 m/s squared for 4 s.",
+      "steps": [
+        "Plug the known values into the velocity update equation.",
+        "Keep the negative acceleration sign through the calculation.",
+        "Confirm that the result is smaller than the initial speed."
+      ],
+      "answer": "The final velocity is 8 m/s."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Treating acceleration as if it were the same thing as velocity.",
+      "correction": "Acceleration describes how velocity changes, not how far or how fast something already moves."
+    },
+    {
+      "mistake": "Dropping the sign on acceleration in braking problems.",
+      "correction": "Negative acceleration must stay negative in the equation or the motion story will stop making sense."
+    }
+  ],
+  "checkpoints": [
+    {
+      "prompt": "If acceleration is zero, what does the velocity update equation reduce to.",
+      "prediction": "Rewrite the expression before revealing the note.",
+      "reveal": "It reduces to v_f = v_i, which is exactly the constant-velocity case."
+    },
+    {
+      "prompt": "If acceleration and velocity point in opposite directions, what happens to speed.",
+      "prediction": "Decide conceptually before reading the tutor answer.",
+      "reveal": "Speed decreases because acceleration opposes the current motion direction."
+    }
+  ],
+  "interactive_lab": {
+    "title": "Acceleration calculator",
+    "prompt": "Adjust the change in velocity and the time interval to see constant acceleration update in real time.",
+    "x_key": "delta_v",
+    "x_label": "Change in velocity",
+    "x_min": 0,
+    "x_max": 30,
+    "x_step": 1,
+    "x_default": 12,
+    "x_unit": "m/s",
+    "y_key": "time",
+    "y_label": "Time",
+    "y_min": 1,
+    "y_max": 10,
+    "y_step": 1,
+    "y_default": 4,
+    "y_unit": "s",
+    "formula": "delta_v / time",
+    "output_label": "Acceleration",
+    "output_unit": "m/s^2",
+    "output_precision": 2,
+    "insight": "For a fixed velocity change, stretching the time interval lowers acceleration because the change is spread out more gently."
+  },
+  "challenge_sets": [
+    {
+      "id": "c3-accel-mc",
+      "type": "multiple_choice",
+      "title": "Constant acceleration cue",
+      "prompt": "Which equation correctly updates velocity for constant acceleration.",
+      "options": [
+        "v_f = v_i + a t",
+        "v_f = Delta x / t",
+        "a = v_f t",
+        "Delta x = a / t"
+      ],
+      "answer": 0,
+      "explanation": "Constant acceleration changes velocity by an amount a times t, so the final velocity is initial velocity plus that change.",
+      "type_label": "Multiple Choice"
+    },
+    {
+      "id": "c3-accel-match",
+      "type": "concept_match",
+      "title": "Match the symbol",
+      "prompt": "Match each symbol phrase to its meaning in the constant-acceleration model.",
+      "pairs": [
+        {
+          "term": "v_i",
+          "match": "initial velocity"
+        },
+        {
+          "term": "v_f",
+          "match": "final velocity"
+        },
+        {
+          "term": "a",
+          "match": "acceleration"
+        }
+      ],
+      "explanation": "These symbols stay stable across the kinematics equations and should be recognized instantly.",
+      "type_label": "Concept Match"
+    },
+    {
+      "id": "c3-accel-estimate",
+      "type": "estimation_puzzle",
+      "title": "Ramp estimate",
+      "prompt": "Estimate the final velocity of a scooter that starts near rest and gains about 6 m/s of velocity over roughly 3 s.",
+      "rubric": "Mention the change in velocity, the time interval, and a rough acceleration or final velocity estimate.",
+      "sample_answer": "If the scooter gains about 6 m/s over 3 s, the acceleration is around 2 m/s squared. Starting near rest means the final velocity is about 6 m/s.",
+      "explanation": "An estimate should still respect the linked meanings of velocity change, acceleration, and elapsed time.",
+      "type_label": "Estimation Puzzle"
+    },
+    {
+      "id": "c3-accel-derive",
+      "type": "derivation_steps",
+      "title": "Build the velocity update",
+      "prompt": "Arrange the steps that lead to the constant-acceleration velocity equation.",
+      "steps": [
+        "Start from the definition a = Delta v / Delta t.",
+        "Multiply both sides by Delta t.",
+        "Replace Delta v with v_f - v_i and solve for v_f."
+      ],
+      "solution_order": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "The derivation starts with the acceleration definition and then algebraically isolates the final velocity.",
+      "type_label": "Derivation Steps"
+    }
+  ],
+  "source_reference": "OPENSTAX-AP-1.1",
+  "source_file": "volume1_chapter1_section3.txt",
+  "schema_version": "v1",
+  "ingested_at": "2026-04-21T02:29:30.543250+00:00"
+}

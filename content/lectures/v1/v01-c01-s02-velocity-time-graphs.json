@@ -1,0 +1,178 @@
+{
+  "volume": 1,
+  "chapter": 1,
+  "section": 2,
+  "unit_title": "Kinematics Foundations",
+  "unit_slug": "kinematics-foundations",
+  "unit_summary": "Build the language of motion first, then connect it to graphs and acceleration models before tackling harder mechanics.",
+  "title": "Velocity-Time Graphs",
+  "estimated_minutes": 20,
+  "summary": "Translate motion descriptions into velocity-time graphs and use slope or area cues without guessing from the picture alone.",
+  "learning_objectives": [
+    "Interpret the slope and shape of a velocity-time graph.",
+    "Use area under a velocity-time graph to estimate displacement.",
+    "Compare flat and sloped graph segments to physical motion stories."
+  ],
+  "key_concepts": [
+    "Slope on a velocity-time graph",
+    "Area as displacement",
+    "Piecewise motion intervals"
+  ],
+  "examples": [
+    "A car cruising and then braking",
+    "A sprinter accelerating before settling into a steady pace"
+  ],
+  "quick_recap": "On a velocity-time graph, slope speaks to acceleration while the signed area under the curve tracks displacement.",
+  "equations": [
+    {
+      "name": "Slope on a velocity-time graph",
+      "expression": "a = Delta v / Delta t",
+      "meaning": "The graph slope tells how quickly velocity changes.",
+      "variables": "Delta v is the change in velocity and Delta t is the elapsed time."
+    },
+    {
+      "name": "Displacement from a rectangle",
+      "expression": "Delta x = v * Delta t",
+      "meaning": "The area under a constant-velocity interval equals displacement.",
+      "variables": "v is velocity and Delta t is time spent at that velocity."
+    }
+  ],
+  "worked_examples": [
+    {
+      "title": "Constant cruise segment",
+      "problem": "A car moves at 12 m/s for 5 s on a flat graph segment.",
+      "steps": [
+        "Recognize the flat segment as constant velocity.",
+        "Compute the area of the rectangle under the graph.",
+        "Attach units to the resulting displacement."
+      ],
+      "answer": "The displacement on that interval is 60 m."
+    },
+    {
+      "title": "Braking line segment",
+      "problem": "Velocity drops from 16 m/s to 4 m/s over 6 s.",
+      "steps": [
+        "Compute the slope as change in velocity over time.",
+        "Keep the sign because the velocity is decreasing.",
+        "Interpret the negative result as braking."
+      ],
+      "answer": "The acceleration is -2 m/s squared."
+    }
+  ],
+  "common_mistakes": [
+    {
+      "mistake": "Reading the height of a velocity-time graph as displacement.",
+      "correction": "Graph height is velocity; displacement comes from the signed area under the graph."
+    },
+    {
+      "mistake": "Forgetting that a downward slope means negative acceleration.",
+      "correction": "Slope carries sign, so decreasing velocity over time produces negative acceleration."
+    }
+  ],
+  "checkpoints": [
+    {
+      "prompt": "If the graph is flat above zero, what is the acceleration.",
+      "prediction": "Decide from slope, not from area, before revealing.",
+      "reveal": "The acceleration is zero because the slope of a horizontal line is zero."
+    },
+    {
+      "prompt": "If the line crosses below the time axis, what changes about the area interpretation.",
+      "prediction": "Think about sign before you reveal.",
+      "reveal": "Area below the axis contributes negative displacement because the velocity is negative."
+    }
+  ],
+  "interactive_lab": {
+    "title": "Area under the graph",
+    "prompt": "Change velocity and time for a constant segment, then watch the displacement readout respond.",
+    "x_key": "velocity",
+    "x_label": "Velocity",
+    "x_min": 0,
+    "x_max": 30,
+    "x_step": 1,
+    "x_default": 12,
+    "x_unit": "m/s",
+    "y_key": "time",
+    "y_label": "Time",
+    "y_min": 1,
+    "y_max": 12,
+    "y_step": 1,
+    "y_default": 5,
+    "y_unit": "s",
+    "formula": "velocity * time",
+    "output_label": "Displacement",
+    "output_unit": "m",
+    "output_precision": 1,
+    "insight": "For constant-velocity motion, the rectangle under the graph grows when either velocity or time increases."
+  },
+  "challenge_sets": [
+    {
+      "id": "c2-graph-mc",
+      "type": "multiple_choice",
+      "title": "Read the graph correctly",
+      "prompt": "On a velocity-time graph, what does the area under the curve represent.",
+      "options": [
+        "Displacement over the interval.",
+        "Instantaneous acceleration only.",
+        "Final velocity only.",
+        "Distance only when the slope is zero."
+      ],
+      "answer": 0,
+      "explanation": "The signed area under a velocity-time curve corresponds to displacement accumulated over that interval.",
+      "type_label": "Multiple Choice"
+    },
+    {
+      "id": "c2-graph-match",
+      "type": "concept_match",
+      "title": "Match the graph cue",
+      "prompt": "Match each graph cue to its meaning.",
+      "pairs": [
+        {
+          "term": "flat segment",
+          "match": "zero acceleration"
+        },
+        {
+          "term": "positive slope",
+          "match": "positive acceleration"
+        },
+        {
+          "term": "area under curve",
+          "match": "displacement"
+        }
+      ],
+      "explanation": "Separating slope and area is the central graph-reading skill here.",
+      "type_label": "Concept Match"
+    },
+    {
+      "id": "c2-graph-estimate",
+      "type": "estimation_puzzle",
+      "title": "Quick rectangle estimate",
+      "prompt": "Estimate the displacement of a bike moving around 8 m/s for about 9 s on a nearly flat graph segment.",
+      "rubric": "Use rectangle area reasoning with clear units and note that this is an estimate.",
+      "sample_answer": "A quick estimate is 8 m/s times 9 s, so the displacement is about 72 m.",
+      "explanation": "Even rough graph estimates should preserve the area idea and keep velocity and time units visible.",
+      "type_label": "Estimation Puzzle"
+    },
+    {
+      "id": "c2-graph-derive",
+      "type": "derivation_steps",
+      "title": "Build the rectangle-area result",
+      "prompt": "Arrange the steps that justify displacement on a constant-velocity interval.",
+      "steps": [
+        "Treat the graph region as a rectangle.",
+        "Multiply the rectangle width by its height.",
+        "Interpret the width as time and height as velocity."
+      ],
+      "solution_order": [
+        0,
+        2,
+        1
+      ],
+      "explanation": "The rectangle model comes first, then the graph axes tell you what width and height mean, and multiplication gives the area.",
+      "type_label": "Derivation Steps"
+    }
+  ],
+  "source_reference": "OPENSTAX-AP-1.1",
+  "source_file": "volume1_chapter1_section2.txt",
+  "schema_version": "v1",
+  "ingested_at": "2026-04-21T02:29:30.542575+00:00"
+}
